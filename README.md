@@ -1,5 +1,5 @@
-## Quotations Viewer
+## Bookmark Viewer
 
-A Shiny app to view quotations:
+A Shiny app to view my bookmark collection:
 
-https://mhenderson.shinyapps.io/quotations-viewer/
+https://mhenderson.shinyapps.io/bookmark-viewer/
