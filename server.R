@@ -23,19 +23,19 @@ shinyServer(function(input, output) {
 
   output$image_front <- renderImage({
     list(
-      src = X %>% filter(bookmark == input$bookmark) %>% slice(1) %>% pull(image_path),
+      src = X %>% filter(bookmark == req(input$bookmark)) %>% slice(1) %>% pull(image_path),
       contentType = 'image/jpeg',
       alt = "This is alternate text",
-      height = 400
+      height = 800
     )
   }, deleteFile = FALSE)
 
   output$image_back <- renderImage({
     list(
-      src = X %>% filter(bookmark == input$bookmark) %>% slice(2) %>% pull(image_path),
+      src = X %>% filter(bookmark == req(input$bookmark)) %>% slice(2) %>% pull(image_path),
       contentType = 'image/jpeg',
       alt = "This is alternate text",
-      height = 400
+      height = 800
     )
   }, deleteFile = FALSE)
 

@@ -17,11 +17,11 @@ shinyUI(
       ),
       column(
         width = 5,
-        wellPanel(plotOutput("image_front"))
+        plotOutput("image_front")
       ),
       column(
         width = 5,
-        wellPanel(plotOutput("image_back"))
+        plotOutput("image_back")
       )
     )
 
