@@ -19,8 +19,7 @@ shinyServer(function(input, output) {
       filter(bookmark == req(input$bookmark)) %>%
       slice(1) %>%
       pull(image_path) %>%
-      image_read() %>%
-      image_write(tempfile(fileext='jpg'), format = 'jpg')
+      image_read()
   })
 
   image_back <- reactive({
@@ -28,8 +27,14 @@ shinyServer(function(input, output) {
       filter(bookmark == req(input$bookmark)) %>%
       slice(2) %>%
       pull(image_path) %>%
-      image_read() %>%
-      image_write(tempfile(fileext='jpg'), format = 'jpg')
+      image_read()
+  })
+
+  image_full <- reactive({
+    c(image_front(), image_back()) %>%
+      image_append() %>%
+      image_write(tempfile(fileext = 'jpg'), format = 'jpg')
+
   })
 
   output$bookmark <- renderUI({
@@ -40,24 +45,13 @@ shinyServer(function(input, output) {
     )
   })
 
-  output$image_front <- renderImage({
+  output$image_full <- renderImage({
 
     list(
-      src = image_front(),
+      src = image_full(),
       contentType = "image/jpeg",
       alt = "This is alternate text",
-      height = 800
-    )
-
-  })
-
-  output$image_back <- renderImage({
-
-    list(
-      src = image_back(),
-      contentType = 'image/jpeg',
-      alt = "This is alternate text",
-      height = 800
+      height = 600
     )
 
   })
