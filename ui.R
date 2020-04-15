@@ -8,21 +8,18 @@ shinyUI(
 
     bootstrap(),
 
-    titlePanel(""),
+    titlePanel("Bookmarks"),
 
     fluidRow(
       column(
-        width = 2,
+        width = 12,
         uiOutput("bookmark")
-      ),
+      )
+    ),
+    fluidRow(
       column(
-        width = 5,
-        plotOutput("image_front")
-      ),
-      column(
-        width = 5,
-        plotOutput("image_back")
+        width = 12,
+        plotOutput("image_full")
       )
     )
-
  ))
