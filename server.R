@@ -3,19 +3,19 @@ library(magick)
 library(shiny)
 library(tidyverse)
 
-X <- tibble(
-  image_path = dir_ls("bookmarks/images",recurse = TRUE, type = "file")
-) %>%
+bookmarks <- function() {
+  tibble(
+    image_path = dir_ls("bookmarks/images", recurse = TRUE, type = "file")
+  ) %>%
   mutate(
     bookmark = gsub("bookmarks/images/", "", dirname(image_path))
   )
-
-N <- nrow(X)
+}
 
 shinyServer(function(input, output) {
 
   image_front <- reactive({
-    X %>%
+    bookmarks() %>%
       filter(bookmark == req(input$bookmark)) %>%
       slice(1) %>%
       pull(image_path) %>%
@@ -23,7 +23,7 @@ shinyServer(function(input, output) {
   })
 
   image_back <- reactive({
-    X %>%
+    bookmarks() %>%
       filter(bookmark == req(input$bookmark)) %>%
       slice(2) %>%
       pull(image_path) %>%
@@ -41,7 +41,7 @@ shinyServer(function(input, output) {
     selectInput(
       inputId = "bookmark",
       label = "",
-      choices = unique(X$bookmark)
+      choices = unique(bookmarks()$bookmark)
     )
   })
 
