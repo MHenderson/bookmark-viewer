@@ -30,14 +30,6 @@ full_images <- bookmarks %>%
     full_image = list(image_append(c(image[[1]], image[[2]])))
   )
 
-get_bookmark_image <- function(name, side_) {
-  bookmarks %>%
-    filter(bookmark == name) %>%
-    filter(side == side_) %>%
-    pull(image) %>%
-    first()
-}
-
 get_bookmark_full <- function(name) {
   full_images %>%
     filter(bookmark == name) %>%
@@ -47,21 +39,6 @@ get_bookmark_full <- function(name) {
 }
 
 shinyServer(function(input, output) {
-
-  image_front <- reactive({
-    get_bookmark_image(req(input$bookmark), "front")
-  })
-
-  image_back <- reactive({
-    get_bookmark_image(req(input$bookmark), "back")
-  })
-
-  image_full <- reactive({
-    c(image_front(), image_back()) %>%
-      image_append() %>%
-      image_write(tempfile(fileext = 'jpg'), format = 'jpg')
-
-  })
 
   output$bookmark <- renderUI({
     selectInput(
