@@ -4,31 +4,56 @@ library(shiny)
 library(tidyverse)
 
 bookmarks <- tibble(
-    image_path = dir_ls("bookmarks/images", recurse = TRUE, type = "file")
+    image_path = dir_ls(
+         path = "bookmarks/images",
+      recurse = TRUE,
+         type = "file"
+    )
   ) %>%
   mutate(
-    bookmark = gsub("bookmarks/images/", "", dirname(image_path))
+    bookmark = gsub(
+          pattern = "bookmarks/images/",
+      replacement = "",
+                x = dirname(image_path)
+    )
   ) %>%
   mutate(
     image = map(image_path, image_read)
+  ) %>%
+  mutate(
+    side = rep(c("front", "back"), n()/2)
   )
+
+full_images <- bookmarks %>%
+  group_by(bookmark) %>%
+  summarise(
+    full_image = list(image_append(c(image[[1]], image[[2]])))
+  )
+
+get_bookmark_image <- function(name, side_) {
+  bookmarks %>%
+    filter(bookmark == name) %>%
+    filter(side == side_) %>%
+    pull(image) %>%
+    first()
+}
+
+get_bookmark_full <- function(name) {
+  full_images %>%
+    filter(bookmark == name) %>%
+    pull(full_image) %>%
+    first() %>%
+    image_write(tempfile(fileext = 'jpg'), format = 'jpg')
+}
 
 shinyServer(function(input, output) {
 
   image_front <- reactive({
-    bookmarks %>%
-      filter(bookmark == req(input$bookmark)) %>%
-      slice(1) %>%
-      pull(image) %>%
-      first()
+    get_bookmark_image(req(input$bookmark), "front")
   })
 
   image_back <- reactive({
-    bookmarks %>%
-      filter(bookmark == req(input$bookmark)) %>%
-      slice(2) %>%
-      pull(image) %>%
-      first()
+    get_bookmark_image(req(input$bookmark), "back")
   })
 
   image_full <- reactive({
@@ -49,7 +74,7 @@ shinyServer(function(input, output) {
   output$image_full <- renderImage({
 
     list(
-      src = image_full(),
+      src = get_bookmark_full(req(input$bookmark)),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
