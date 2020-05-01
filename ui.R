@@ -1,41 +1,24 @@
-library(bootstraplib)
 library(shiny)
 
-bs_theme_new()
+shinyUI(tags$div(class="flex-container",
 
-shinyUI(
-  fluidPage(
-
-    bootstrap(),
-
-    tags$head(
-      tags$style(HTML("
-       .col-sm-1:hover{
-         z-index:555555 !important;
-       }
+  tags$head(
+    tags$style(HTML("
+      .flex-container {
+        display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+      }
     "))
-    ),
+  ),
 
-    fluidRow(
-      column(
-        width = 12,
-        uiOutput("bookmark")
-      )
-    ),
-    #fluidRow(
-    #  column(
-    #    width = 12,
-    #    plotOutput("image_full")
-    #  )
-    #),
-    fluidRow(
-      column(width = 1, plotOutput("image_one")),
-      column(width = 1, plotOutput("image_two")),
-      column(width = 1, plotOutput("image_three")),
-      column(width = 1, plotOutput("image_four")),
-      column(width = 1, plotOutput("image_five")),
-      column(width = 1, plotOutput("image_six")),
-      column(width = 1, plotOutput("image_seven")),
-      column(width = 1, plotOutput("image_eight")),
-    )
- ))
+  tags$div(plotOutput("image_one", height = '600px')),
+  tags$div(plotOutput("image_two", height = '600px')),
+  tags$div(plotOutput("image_three", height = '600px')),
+  tags$div(plotOutput("image_four", height = '600px')),
+  tags$div(plotOutput("image_five", height = '600px')),
+  tags$div(plotOutput("image_six", height = '600px')),
+  tags$div(plotOutput("image_seven", height = '600px')),
+  tags$div(plotOutput("image_eight", height = '600px'))
+))
+
