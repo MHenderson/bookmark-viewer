@@ -38,22 +38,25 @@ get_bookmark_full <- function(name) {
     image_write(tempfile(fileext = 'jpg'), format = 'jpg')
 }
 
+images_grid <- full_images %>%
+  mutate(
+    page = rep(0:1, each = 8),
+    position = rep(1:8, 2)
+  )
+
+get_image_grid <- function(page_, position_) {
+  images_grid %>%
+    filter(page == page_, position == position_) %>%
+    pull(full_image) %>%
+    first() %>%
+    image_write(tempfile(fileext = 'jpg'), format = 'jpg')
+}
+
 shinyServer(function(input, output) {
-
-  output$image_full <- renderImage({
-
-    list(
-              src = get_bookmark_full(req(input$bookmark)),
-      contentType = "image/jpeg",
-              alt = "This is alternate text",
-           height = 600
-    )
-
-  })
 
   output$image_one <- renderImage({
     list(
-      src = get_bookmark_full("barter-books"),
+      src = get_image_grid(input$page %% 2, 1),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -62,7 +65,7 @@ shinyServer(function(input, output) {
 
   output$image_two <- renderImage({
     list(
-      src = get_bookmark_full("bbc-gardening"),
+      src = get_image_grid(input$page %% 2, 2),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -71,7 +74,7 @@ shinyServer(function(input, output) {
 
   output$image_three <- renderImage({
     list(
-      src = get_bookmark_full("blackwells"),
+      src = get_image_grid(input$page %% 2, 3),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -80,7 +83,7 @@ shinyServer(function(input, output) {
 
   output$image_four <- renderImage({
     list(
-      src = get_bookmark_full("book-depository"),
+      src = get_image_grid(input$page %% 2, 4),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -89,7 +92,7 @@ shinyServer(function(input, output) {
 
   output$image_five <- renderImage({
     list(
-      src = get_bookmark_full("book-depository-fish"),
+      src = get_image_grid(input$page %% 2, 5),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -98,7 +101,7 @@ shinyServer(function(input, output) {
 
   output$image_six <- renderImage({
     list(
-      src = get_bookmark_full("california-redwoods"),
+      src = get_image_grid(input$page %% 2, 6),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -107,7 +110,7 @@ shinyServer(function(input, output) {
 
   output$image_seven <- renderImage({
     list(
-      src = get_bookmark_full("city-lights"),
+      src = get_image_grid(input$page %% 2, 7),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
@@ -116,7 +119,7 @@ shinyServer(function(input, output) {
 
   output$image_eight <- renderImage({
     list(
-      src = get_bookmark_full("keplers"),
+      src = get_image_grid(input$page %% 2, 8),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600

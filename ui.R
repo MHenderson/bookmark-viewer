@@ -6,8 +6,9 @@ shinyUI(tags$div(class="flex-container",
     tags$style(HTML("
       .flex-container {
         display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
       }
     "))
   ),
@@ -19,6 +20,8 @@ shinyUI(tags$div(class="flex-container",
   tags$div(plotOutput("image_five", height = '600px')),
   tags$div(plotOutput("image_six", height = '600px')),
   tags$div(plotOutput("image_seven", height = '600px')),
-  tags$div(plotOutput("image_eight", height = '600px'))
+  tags$div(plotOutput("image_eight", height = '600px')),
+
+  actionButton("page", label = "Next")
 ))
 
