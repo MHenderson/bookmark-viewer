@@ -40,23 +40,88 @@ get_bookmark_full <- function(name) {
 
 shinyServer(function(input, output) {
 
-  output$bookmark <- renderUI({
-    selectInput(
-      inputId = "bookmark",
-      label = "",
-      choices = unique(bookmarks$bookmark)
-    )
-  })
-
   output$image_full <- renderImage({
 
     list(
-      src = get_bookmark_full(req(input$bookmark)),
+              src = get_bookmark_full(req(input$bookmark)),
+      contentType = "image/jpeg",
+              alt = "This is alternate text",
+           height = 600
+    )
+
+  })
+
+  output$image_one <- renderImage({
+    list(
+      src = get_bookmark_full("barter-books"),
       contentType = "image/jpeg",
       alt = "This is alternate text",
       height = 600
     )
-
   })
+
+  output$image_two <- renderImage({
+    list(
+      src = get_bookmark_full("bbc-gardening"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_three <- renderImage({
+    list(
+      src = get_bookmark_full("blackwells"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_four <- renderImage({
+    list(
+      src = get_bookmark_full("book-depository"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_five <- renderImage({
+    list(
+      src = get_bookmark_full("book-depository-fish"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_six <- renderImage({
+    list(
+      src = get_bookmark_full("california-redwoods"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_seven <- renderImage({
+    list(
+      src = get_bookmark_full("city-lights"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
+  output$image_eight <- renderImage({
+    list(
+      src = get_bookmark_full("keplers"),
+      contentType = "image/jpeg",
+      alt = "This is alternate text",
+      height = 600
+    )
+  })
+
 
 })
