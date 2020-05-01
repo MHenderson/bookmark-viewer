@@ -18,7 +18,10 @@ bookmarks <- tibble(
     )
   ) %>%
   mutate(
-    image = map(image_path, image_read)
+    image = map(image_path, image_read),
+  ) %>%
+  mutate(
+    image = map(image, image_scale, "x600")
   ) %>%
   mutate(
     side = rep(c("front", "back"), n()/2)
